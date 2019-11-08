@@ -1,8 +1,10 @@
 package br.com.ariadnemartines.Automacao;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import br.com.ariadnemartines.Driver.Driver;
+import br.com.ariadnemartines.Utils.Utils;
 
 /**
  * Hello world!
@@ -18,12 +20,9 @@ public class App
     @Test
     public void rodando() {
     	Driver.getWebPage("http://www.google.com.br");
-    //	Utils.espera(5); // em segundos
-    	try {
-			Thread.sleep(3000);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+    	Utils.esperaEmSegundos(5);
+    	Utils.esperaAteElementoEstarClicavel(By.xpath("//*[@name='q']"));
+    	
     	
     	Driver.encerraDriver();
     }

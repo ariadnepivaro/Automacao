@@ -2,11 +2,13 @@ package br.com.ariadnemartines.Driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.math.Quantiles;
 
 public class Driver {
 	private static WebDriver driver = null;
+	private static WebDriverWait wait;
 
 	public Driver() {}
 	
@@ -34,5 +36,12 @@ public class Driver {
 			getWebDriver().quit(); // fecha
 			driver=null;
 		}
+	}
+	
+	public static WebDriverWait getWebDriverWait() { // aguardar ate o elemento estar visivel
+		if(wait == null) {
+			wait = new WebDriverWait(Driver.getWebDriver(), 15);
+		}
+		return wait;
 	}
 }
