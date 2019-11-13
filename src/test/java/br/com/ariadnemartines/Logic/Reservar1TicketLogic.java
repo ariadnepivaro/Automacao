@@ -15,7 +15,6 @@ public class Reservar1TicketLogic {
 		
 		reservar1TicketPage = new Reservar1TicketPage();
 		utils = new Utils();
-		excel = new Excel();		
 	}
 	
 	public void acessarSite(String url) throws Throwable {
@@ -117,4 +116,6 @@ public class Reservar1TicketLogic {
 		utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getBtnSecurePurchase());
 		utils.clicarBotao(Driver.getWebDriver(), reservar1TicketPage.getBtnSecurePurchase());
 	}
+	
+	
 }

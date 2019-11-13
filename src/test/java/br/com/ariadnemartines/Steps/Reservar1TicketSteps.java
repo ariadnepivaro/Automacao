@@ -1,11 +1,12 @@
 package br.com.ariadnemartines.Steps;
 
 import br.com.ariadnemartines.Logic.Reservar1TicketLogic;
+import br.com.ariadnemartines.Utils.Utils;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
-public class Reservar1TicketSteps {
+public class Reservar1TicketSteps extends Utils {
 	
 	private Reservar1TicketLogic reservar1TicketLogic;
 	
@@ -27,6 +28,7 @@ public class Reservar1TicketSteps {
 	@Given("^preencho a 'Senha' \"([^\"]*)\"$")
 	public void preencho_a_Senha(String senha) throws Throwable {
 		reservar1TicketLogic.preencherSenha(senha);
+		Utils.evidencias();
 	}
 
 	@Given("^clico no botao 'Sign-In'$")
@@ -37,6 +39,7 @@ public class Reservar1TicketSteps {
 	@Then("^seleciono a 'Quantidade de Passageiros' \"([^\"]*)\"$")
 	public void seleciono_a_Quantidade_de_Passageiros(String passageiros) throws Throwable {
 		reservar1TicketLogic.selecionarPassageiros(passageiros);
+		Utils.evidencias();
 	}
 
 	@Then("^seleciono a cidade de origem 'Departing From' \"([^\"]*)\"$")
@@ -81,12 +84,14 @@ public class Reservar1TicketSteps {
 
 	@Then("^seleciono o voo de ida em 'Depart'$")
 	public void seleciono_o_voo_de_ida_em_Depart() throws Throwable {
+		Utils.evidencias();
 		reservar1TicketLogic.clicarVooIda();
 	}
 
 	@Then("^seleciono o voo de retorno em 'Return'$")
 	public void seleciono_o_voo_de_retorno_em_Return() throws Throwable {
 		reservar1TicketLogic.clicarVooRetorno();
+		Utils.evidencias();
 	}
 
 	@Then("^clico em 'Continue' Select Flight$")
@@ -96,12 +101,14 @@ public class Reservar1TicketSteps {
 
 	@Then("^preencho o 'First Name' \"([^\"]*)\"$")
 	public void preencho_o_First_Name(String first) throws Throwable {
+		Utils.evidencias();
 		reservar1TicketLogic.preenncherFirstName(first);
 	}
 
 	@Then("^preencho o 'Last Name' \"([^\"]*)\"$")
 	public void preencho_o_Last_Name(String last) throws Throwable {
 		reservar1TicketLogic.preencherLastName(last);
+		Utils.evidencias();
 	}
 
 	@Then("^preencho o 'Numero do Cartao' \"([^\"]*)\"$")
@@ -112,12 +119,7 @@ public class Reservar1TicketSteps {
 	@Then("^clico em 'Secure Purchase'$")
 	public void clico_em_Secure_Purchase() throws Throwable {
 		reservar1TicketLogic.clicarSecurePurchase();
+		Utils.evidencias();
 	}
-
-
-
-	
-	
-	
 	
 }

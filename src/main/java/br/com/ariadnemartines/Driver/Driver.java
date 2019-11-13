@@ -7,6 +7,7 @@ public class Driver {
 	private static WebDriver driver = null;
 	private static WebDriverWait wait;
 
+
 	public Driver() {}
 	
 	public static WebDriver getWebDriver() {

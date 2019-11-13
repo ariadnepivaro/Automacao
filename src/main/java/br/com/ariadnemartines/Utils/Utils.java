@@ -2,19 +2,29 @@ package br.com.ariadnemartines.Utils;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
+import br.com.ariadnemartines.Automacao.Inicio_Termino;
 import br.com.ariadnemartines.Driver.Driver;
 
 public class Utils extends Driver {
 	
 	private WebElement elemento;
-	private WebElement Select;
+	private static int i;
 	
+	public Utils() {
+		i = 1;
+	}
+
 	public static void esperaAteElementoEstarClicavel(By element) {
 		try {
 			Driver.getWebDriverWait().until(ExpectedConditions.elementToBeClickable(element));
@@ -63,8 +73,14 @@ public class Utils extends Driver {
 			assertTrue("O elemento " + elemento.getAttribute("Name") + " não existe", false);
 	}
 	
-	
-	
-	
-	
+	public static void evidencias() {
+		try {
+			TakesScreenshot source = (TakesScreenshot) getWebDriver();
+			File scr = source.getScreenshotAs(OutputType.FILE);
+			File imagem = new File(System.getProperty("user.dir") + "\\Evidencias\\"+ Inicio_Termino.getNomeDoCenario() +"\\evidencia_" + i++ + ".png");
+			FileUtils.copyFile(scr, imagem);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }
