@@ -19,89 +19,71 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
 
+	private XSSFSheet planilha;	
+	private String nomeArquivo;
+	private XSSFWorkbook wb;
+	private FileInputStream arquivo;
 	
-	private String path;
-	private XSSFSheet aba;
-	private FileInputStream file;
-	private XSSFWorkbook planilha;
-
-	public Excel(String path) {
-		this.path = path;
+	public Excel(String nomeArquivo) {
+		this.nomeArquivo = nomeArquivo;
+		this.abrePlanilha(0);
 	}
 
-	private void abrirPlanilha(int aba) {
+	public void abrePlanilha(int indicePlanilha) {
 		try {
-			this.file = new FileInputStream(new File(path));
-			this.planilha = new XSSFWorkbook(this.file);
-			this.aba = this.planilha.getSheetAt(aba);
+			this.arquivo = new FileInputStream(new File(this.getNomeArquivo()));
+			this.wb = new XSSFWorkbook(this.arquivo);
+		} catch (IOException ex) {
+			System.out.println("Erro ao abrir a pasta de Excel em '" + this.getNomeArquivo() + "' ..." + ex);
+		}
+		this.planilha = this.getWorkBook().getSheetAt(indicePlanilha);
+	}
+	
+	public String getTextoCelula(int linha, int coluna) {
+		abrePlanilha(0);
+		String textoCelula;
+		try {
+			textoCelula = this.getPlanilha().getRow(linha).getCell(coluna).getStringCellValue();
+		} catch (Exception ex) {
+			textoCelula = Integer.toString((int) this.getPlanilha().getRow(linha).getCell(coluna).getNumericCellValue());
+		}
+		// System.out.println(textoCelula);
+		fechaPlanilha();
+		return textoCelula;
+	}
+	
+	private void fechaPlanilha() {
+		try {
+			this.arquivo.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void salvarPlanilha() {
-		FileOutputStream newFile;
-		try {
-			newFile = new FileOutputStream(path);
-			this.planilha.write(newFile);
-		} catch (Exception e) {
-			System.out.println("Erro em Salvar Planilha Excel");
-		}
-	}
-
-	private void fecharPlanilha() {
-		try {
-			this.file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Map<String, String> lePlanilhaRetornandoMassaDeDados(int linha) {
-		Map<String, String> massa = new HashMap<String, String>();
-		int count =0;
-		abrirPlanilha(0);
-		Row linhaPlanilha = this.aba.getRow(0);
-		Iterator<Cell> cellIterator = linhaPlanilha.cellIterator();
-		while (cellIterator.hasNext()) {
-			Cell cellChave = cellIterator.next();
-			String chave = converteCellEmString(cellChave);
-			Row rowValor = this.aba.getRow(linha);
-			String valor = converteCellEmString(rowValor.getCell(count));
-			if(chave.equals("OrderNumber")) { // guardar posicao da celula
-				valor = linha + "-" + count;
-			}
-			System.out.println(chave + " : " + valor);
-			massa.put(chave, valor);
-			count++;
-		}
-		fecharPlanilha();
-		return massa;
-	}
-	
-	private String converteCellEmString(Cell cell) {
-		String leituraString;
-		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-			double valor =  cell.getNumericCellValue();
-			leituraString= Double.toString(valor);
-		}else if (cell.getCellType() == Cell.CELL_TYPE_STRING){
-			leituraString= cell.getStringCellValue();
-		}else if (cell.getCellType() == Cell.CELL_TYPE_BLANK){
-			leituraString = "";
-		}else {
-			leituraString = null;
-		}
-		return leituraString;
-	}
-
-	public void gravaNumeroOrdem(String ordemPosicao, String ordem) {
-		abrirPlanilha(0);
-		int linha = Integer.parseInt(ordemPosicao.split("-")[0]);
-		int coluna = Integer.parseInt(ordemPosicao.split("-")[1]);
-		Row linhaPlanilha = this.aba.getRow(linha);
-		Cell celulaOrdem = linhaPlanilha.createCell(coluna);
-		celulaOrdem.setCellValue(ordem);
+	public void setTextoCelula(int linha, int coluna, String value) {
+		abrePlanilha(0);
+		this.getPlanilha().getRow(linha).getCell(coluna).setCellValue(value);
 		salvarPlanilha();
-		fecharPlanilha();
+		fechaPlanilha();
+	}
+	
+	public void salvarPlanilha() {
+		try {
+			this.wb.write(new FileOutputStream(this.getNomeArquivo()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public XSSFSheet getPlanilha() {
+		return this.planilha;
+	}
+	
+	public String getNomeArquivo() {
+		return this.nomeArquivo;
+	}
+	
+	public XSSFWorkbook getWorkBook() {
+		return this.wb;
 	}
 }

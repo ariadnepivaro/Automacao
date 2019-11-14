@@ -5,10 +5,9 @@ Feature: Criar Massa de Dados Reserva
     And preencho o campo 'Nome de Usuario' "<usuario>"
     And preencho a 'Senha' "<senha>"
     And clico no botao 'Sign-In'
-    And valido as informacoes da planilha "<linha>"
-    Then seleciono a 'Cidade de Origem' na planilha excel
-    And seleciono o 'Dia da Partida' na planilha excel
-    And 
+    Then seleciono a 'Cidade de Origem' na planilha excel "<linha>"
+    And seleciono o 'Dia da Partida' na planilha excel "<linha>"
+    
     
     
     

@@ -1,6 +1,9 @@
 package br.com.ariadnemartines.Steps;
 
+import org.openqa.selenium.By;
+
 import br.com.ariadnemartines.Logic.Reservar1TicketLogic;
+import br.com.ariadnemartines.Utils.Excel;
 import br.com.ariadnemartines.Utils.Utils;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
@@ -8,11 +11,19 @@ import cucumber.api.java.en.Then;
 
 public class Reservar1TicketSteps extends Utils {
 	
+	private static Excel excel;
 	private Reservar1TicketLogic reservar1TicketLogic;
 	
 	public Reservar1TicketSteps() throws Throwable {
 		
 		reservar1TicketLogic = new Reservar1TicketLogic();
+	}
+	
+	private static Excel getExcel() {
+		if(excel == null) {
+			excel = new Excel(System.getProperty("user.dir") + "\\Recursos\\SampleAppData (3).xlsx");
+		}
+		return excel;
 	}
 	
 	@Given("^que acesso o site \"([^\"]*)\"$")
@@ -121,5 +132,29 @@ public class Reservar1TicketSteps extends Utils {
 		reservar1TicketLogic.clicarSecurePurchase();
 		Utils.evidencias();
 	}
-	
+
+	@Given("^valido as informacoes da planilha \"([^\"]*)\"$")
+	public void valido_as_informacoes_da_planilha(String arg1) throws Throwable {
+	}
+
+	@Then("^seleciono a 'Cidade de Origem' na planilha excel \"([^\"]*)\"$")
+	public void seleciono_a_Cidade_de_Origem_na_planilha_excel(String linha) throws Throwable {
+		String massa =getExcel().getTextoCelula(Integer.parseInt(linha), 4); // linha do bdd e coluna 5
+		System.out.println("Cidade de Origem: " + massa);
+		reservar1TicketLogic.selecionarCidadeOrigem(massa);
+	}
+
+	@Then("^seleciono o 'Dia da Partida' na planilha excel \"([^\"]*)\"$")
+	public void seleciono_o_Dia_da_Partida_na_planilha_excel(String linha) throws Throwable {
+		String massa = getExcel().getTextoCelula(Integer.parseInt(linha), 3); // linha do bdd e coluna 4
+		System.out.println("Data: " + massa);
+		reservar1TicketLogic.selecionarDiaPartida(massa.split("[/]")[0]);
+		reservar1TicketLogic.selecionarMesPartida(massa.split("[/]")[1]);
+		
+		
+		
+		String mapeamento = "/html/body/div/table/tbody/tr/td[2]/table/tbody/tr[4]/td/table/tbody/tr/td[2]/table/tbody/tr[5]/td/form/table/tbody/tr[1]/td/font/font/b/font/font";
+		String ordem =getWebDriver().findElement(By.xpath(mapeamento)).getAttribute("innerText");
+		getExcel().setTextoCelula(Integer.parseInt(linha), 6, ordem);
+	}
 }
