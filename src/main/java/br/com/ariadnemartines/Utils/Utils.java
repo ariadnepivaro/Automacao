@@ -83,4 +83,9 @@ public class Utils extends Driver {
 			ex.printStackTrace();
 		}
 	}
+
+	public static String encontraElementoERetornaTexto(By elemento) {
+		String texto =getWebDriver().findElement(elemento).getAttribute("innerText");
+		return texto;
+	}
 }

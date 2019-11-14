@@ -15,8 +15,8 @@ Feature: Reservar 1 ticket
   And seleciono o 'Dia de Retorno' "<diaDeRetorno>"  
   And seleciono a 'Classe de Servico' 
   And clico no botao 'Continue'
-  And seleciono o voo de ida em 'Depart'
-  And seleciono o voo de retorno em 'Return'
+  And seleciono o voo de ida em 'Depart' "<voo>"
+  And seleciono o voo de retorno em 'Return' "<retorno>"
   And clico em 'Continue' Select Flight
   Then preencho o 'First Name' "<firstName>"
   And preencho o 'Last Name' "<lastName>"
@@ -25,5 +25,5 @@ Feature: Reservar 1 ticket
   
   Examples:
   
-  |              url                 | usuario | senha   | passageiros | cidadeDeOrigem | mesDePatida | diaDePartida | cidadeDeDestino | mesDeRetorno | diaDeRetorno | firstName | lastName |        number     |
-  | http://www.newtours.demoaut.com/ | mercury | mercury |     1       |     Paris      |  December   |      12      |    Seattle      |    January   |      5       |  Ariadne  | Martines | 1234567890123456  |
+  |              url                 | usuario | senha   | passageiros | cidadeDeOrigem | mesDePatida | diaDePartida | cidadeDeDestino | mesDeRetorno | diaDeRetorno |           voo          |        retorno         |firstName | lastName |        number     |
+  | http://www.newtours.demoaut.com/ | mercury | mercury |     1       |     Paris      |  December   |      12      |    Seattle      |    January   |      5       | Blue Skies Airlines 361| Unified Airlines 633   | Ariadne  | Martines | 1234567890123456  |

@@ -18,8 +18,8 @@ public class Reservar1TicketPage {
 	private static By radioClasseEconomica = By.xpath("//*[@name='servClass' and @value='Coach']");
 	private static By radioClasseExecutiva = By.xpath("//*[@name='servClass' and @value='Business']");
 	private static By radioPrimeiraClasse = By.xpath("//*[@name='servClass' and @value='First']");
-	private static By radioVooIda = By.xpath("//*[@value='Blue Skies Airlines$361$271$7:10']");
-	private static By radioVooRetorno = By.xpath("//*[@value='Blue Skies Airlines$631$273$14:30']");
+	private static By radioVooIda;
+	private static By radioVooRetorno; // = By.xpath("//*[@value='Blue Skies Airlines$631$273$14:30']");
 	private static By btnContinueSelectFlight = By.name("reserveFlights");
 	private static By textCartao = By.name("creditnumber");
 	private static By textFirstName = By.name("passFirst0");
@@ -69,10 +69,13 @@ public class Reservar1TicketPage {
 	public static By getRadioPrimeiraClasse() {
 		return radioPrimeiraClasse;
 	}
-	public static By getRadioVooIda() {
+	public static By getRadioVooIda(String voo) {
+		
+		radioVooIda = By.xpath("//*[@name='results']/table[1]//*[contains(text(),'"+voo+"')]/../../..//td/input");
 		return radioVooIda;
 	}
-	public static By getRadioVooRetorno() {
+	public static By getRadioVooRetorno(String voo2) {
+		radioVooRetorno = By.xpath("//*[@name='results']/table[2]//*[contains(text(),'"+voo2+"')]/../../..//td/input");
 		return radioVooRetorno;
 	}
 	public static By getBtnContinueSelectFlight() {

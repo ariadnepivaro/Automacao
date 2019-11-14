@@ -13,7 +13,6 @@ public class Driver {
 	public static WebDriver getWebDriver() {
 		if(driver == null) {
     		driver = newChromeDriver();
-    		//driver = newInternetExplorerDriver();
     	}
 		return driver;
 	}
@@ -24,7 +23,6 @@ public class Driver {
     }
 
 	private static WebDriver newChromeDriver() {
-		System.out.println("abriu: "+ System.getProperty("user.dir"));
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\Driver\\chromedriver.exe");
 		return new ChromeDriver();
 	}

@@ -25,5 +25,6 @@ public class Inicio_Termino extends Driver{
 		}else {
 			System.out.println("Teste não passou");
 		}
+		Driver.encerraDriver();
 	}
 }

@@ -1,5 +1,7 @@
 package br.com.ariadnemartines.Logic;
 
+import org.openqa.selenium.By;
+
 import br.com.ariadnemartines.Driver.Driver;
 import br.com.ariadnemartines.Page.Reservar1TicketPage;
 import br.com.ariadnemartines.Utils.Excel;
@@ -49,6 +51,39 @@ public class Reservar1TicketLogic {
 
 	public void selecionarMesPartida(String mesPartida) throws Throwable {
 		switch (mesPartida) {
+		case "01":
+			mesPartida = "January";
+			break;
+		case "02":
+			mesPartida = "February";
+			break;
+		case "03":
+			mesPartida = "March";
+			break;
+		case "04":
+			mesPartida = "April";
+			break;
+		case "05":
+			mesPartida = "May";
+			break;
+		case "06":
+			mesPartida = "June";
+			break;
+		case "07":
+			mesPartida = "July";
+			break;
+		case "08":
+			mesPartida = "August";
+			break;
+		case "09":
+			mesPartida = "September";
+			break;
+		case "10":
+			mesPartida = "October";
+			break;
+		case "11":
+			mesPartida = "November";
+			break;
 		case "12":
 			mesPartida = "December";
 			break;
@@ -91,14 +126,14 @@ public class Reservar1TicketLogic {
 		utils.clicarBotao(Driver.getWebDriver(), reservar1TicketPage.getBtnContinue());
 	}
 
-	public void clicarVooIda() throws Throwable {
-		utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioVooIda());
-		utils.clicaRadioButton(Driver.getWebDriver(), reservar1TicketPage.getRadioVooIda());
+	public void clicarVooIda(String voo) throws Throwable {
+		utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioVooIda(voo));
+		utils.clicaRadioButton(Driver.getWebDriver(), reservar1TicketPage.getRadioVooIda(voo));
 	}
 
-	public void clicarVooRetorno() throws Throwable {
-		utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioVooRetorno());
-		utils.clicaRadioButton(Driver.getWebDriver(), reservar1TicketPage.getRadioVooRetorno());
+	public void clicarVooRetorno(String retorno) throws Throwable {
+		utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioVooRetorno(retorno));
+		utils.clicaRadioButton(Driver.getWebDriver(), reservar1TicketPage.getRadioVooRetorno(retorno));
 	}
 
 	public void clicarContinueFlight() throws Throwable {
@@ -126,4 +161,24 @@ public class Reservar1TicketLogic {
 		utils.clicarBotao(Driver.getWebDriver(), reservar1TicketPage.getBtnSecurePurchase());
 	}
 
+	public void selecionarClasseDeServicos(String servicos) throws Throwable {
+		String classeServicos = servicos.toUpperCase().trim().replaceAll(" ", "");
+		if(classeServicos.contains("ECONOMYCLASS")) {
+			utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioClassEconomica());
+			utils.clicaRadioButton(Driver.getWebDriver(),reservar1TicketPage.getRadioClassEconomica());
+		}else if(classeServicos.contains("BUSINESSCLASS")) {
+			utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioClasseExecutiva());
+			utils.clicaRadioButton(Driver.getWebDriver(), reservar1TicketPage.getRadioClasseExecutiva());
+		}else if(classeServicos.contains("FIRSTCLASS")) {	
+			utils.esperaAteElementoEstarClicavel(reservar1TicketPage.getRadioPrimeiraClasse());
+			utils.clicaRadioButton(Driver.getWebDriver(), reservar1TicketPage.getRadioPrimeiraClasse());
+		}else{
+			System.out.println("Opção inválida");
+		}
+	}
+	
+	public String gravarOrdemGerada() throws Throwable {
+		String ordem = utils.encontraElementoERetornaTexto(reservar1TicketPage.getOrdemGerada());
+		return ordem;
+	}
 }
